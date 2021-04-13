@@ -14,7 +14,7 @@ git remote add upstream "https://$GH_TOKEN@github.com/ga-wdi/fundamentals.git"
 git fetch upstream
 git reset upstream/gh-pages
 
-echo "fundamentals.generalassemb.ly" > CNAME
+echo "kapploneon.github.io/Kapploneon-js-fundamentals" > CNAME
 
 touch .
 
