@@ -33,7 +33,9 @@ document.getElementById('main')
 | `getElementsByClassName()` |	Allows you to select all elements with a given class attribute |
 | `getElementsByTagName()` |	Locates all elements that match a given tag name |
 | `querySelectorAll()` |	Uses CSS selector to select one or more elements |
-
+| `closest()` |	Uses CSS selector to select the closest parent elements |
+Note: All the above methods do the searching in reference to the element through which they are called.
+eg. you can search inside a specific element to find if there are any elements that matches the search criteria. 
 
 #### Cache
 If we'd like to work with that element multiple times, a variable should be used to store, or **cache**, the results of our query.
