@@ -57,6 +57,9 @@ The process of selecting another element based on its relationship to a previous
 ```js
 document.querySelector('li').parentNode
 ```
+<br>
+![dom traversal img](assets/chapter11/domTraversal.png)
+<br>
 #### NodeList
 A `NodeList` is a list of node objects numbered similarly to arrays.
 
