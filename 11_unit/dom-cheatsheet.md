@@ -79,7 +79,9 @@ The `innerHTML` and `textContent` properties can be used to access or update con
 |  Property      |  Description  |
 |:-------:    |:-------:|
 | `innerHTML`  | Get or set the HTML content of an element. |
-| `textContent` | Get or set the text content of an element. |
+| `innerText` | Get or set the text content of an element by applying trimming and other processing. It will get the bare text after trimming the white spaces. Also it will get the text only if it is visible on the html page. |
+| `textContent` | Get or set the text content of an element as it is without trimming the white space. It will get the text even if the text is not visible on the page. |
+
 
 
 The syntax for getting content looks like this:
@@ -103,6 +105,12 @@ To add new elements to the page, we'll need to use a three step process:
 2.  Next we will add content to the element using the `innerHTML` or `textContent` properties.
 3.  Now that our element has been created, we can add it as a child of an element using the `appendChild()` method. This will add an element as the last child of the parent element.
 
+|  Method      |  Description  |
+|:-------:    |:-------:|
+| `parent.appendChild(e)` | Add an element as the last child of the parent element |
+| `parent.append(e1, e2)` | Add an element/s or text/s as the last child of the parent element |
+| `element.remove()` | Remove an element |
+| `parent.removeChild(child)` | Remove the child element of the parent element |
 
 To add a sixth item to our list we can execute the following code:
 
@@ -115,6 +123,10 @@ newListItem.textContent = 'Jalapenos';
 
 // And finally, let's add that list item as a child of the ul.
 document.querySelector('ul').appendChild(newListItem);
+
+// Adding text to the div element
+document.querySelector('div').append("Hello this is append");
+document.querySelector('div').append("Hello this is append 1", "append 2");
 ```
 
 
@@ -124,19 +136,36 @@ document.querySelector('ul').appendChild(newListItem);
 
 |  Property      |  Description  |
 |:-------:    |:-------:|
-| `className` | Change the value of the class attribute for an element |
+| `element.className` | Change the value of the class attribute for an element |
+| `element.dataset` | Gets/Sets all the data attributes(data-*) of an element |
+| `element.style.cssPropertyInCamelCase` | Gets or sets css property of an element |
 
 ```js
-document.getElementById('important').className = 'highlight';
+
+<div id="important" data-test="this is test" data-longer-text="this is second data test">This is a dummy element for reference</div>
+
+const element = document.getElementById('important');
+element.className = 'highlight';
+
+// pulls up all the data-* attributes in an array
+console.log(element.dataset);
+// To get an individual data-? attribute
+console.log(element.dataset.longerText);
 ```
 
 |  Method      |  Description  |
 |:-------:    |:-------:|
-|`setAttribute()` |	Sets an attribute of an element |
-|`removeAttribute()` |	Removes an attribute from an element |
+|`element.getAttribute()` |	Gets an attribute of an element |
+|`element.setAttribute()` |	Sets an attribute of an element |
+|`element.removeAttribute()` |	Removes an attribute from an element |
+|`element.classList.add("new-class")` |	Adds a class to an element |
+|`element.classList.remove("old-class")` |	Removes a class from an element |
+|`element.classList.toggle("toggle-class")` |	Add a class to an element if it doesn't exists and removes if it exists |
+|`element.classList.toggle("toggle-force-class", false/true)` |	Adding boolean parameter to forcefully add or remove a class |
 
 
 ```js
+document.getElementsByTagName('a')[0].getAttribute('id');
 document.getElementsByTagName('a')[0].setAttribute('href', 'http://newurl.com');
 document.getElementsByTagName('a')[0].removeAttribute('id');
 ```
@@ -152,9 +181,29 @@ We can set up **event handlers** in our scripts that will **listen**, or wait, f
 The syntax for setting up an event handler looks like this:
 
 ```js
-element.addEventListener('nameOfEvent', functionToRun);
+element.addEventListener('nameOfEvent', functionToRun, options);
+
+// options can specifiy to bubble or to capture
+element.addEventListener('nameOfEvent', functionToRun, {capture: true});
 ```
 
+If you keep the capture on for an event then it will trigger while moving down the document.
+The bubble on the other hand will trigger while moving up the document from the child element. 
+You can also keep multiple events on a single element so you can set one using capture mode while the other you can set to trigger during the bubbling phase. For reference below image shows the sequence in which the events would trigger if both capture and bubble events are present on all the elements.
+
+<br>
+![dom traversal img](/Kapploneon-js-fundamentals/assets/chapter11/eventCaptureBubblePhase.png)
+<br>
+
+```js
+// This code will stop all the events after the trigger of child bubble
+// ie. it will executes and stops at 4. The events 5, 6, 7 will be skipped. 
+child.addEventListener('click', e => {
+    console.log("This is a bubble event");
+    e.stopPropagation()
+})
+// Similarly you can apply stopPropagation() at any level from 0 to 7 of the above image.
+```
 
 #### Types of Events
 
