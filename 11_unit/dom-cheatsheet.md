@@ -185,6 +185,22 @@ element.addEventListener('nameOfEvent', functionToRun, options);
 
 // options can specifiy to bubble or to capture
 element.addEventListener('nameOfEvent', functionToRun, {capture: true});
+
+// options can also specifiy if you want to execute the event only once and remove it.
+// This click event will only trigger once and then for the subsequent clicks it will be removed.
+element.addEventListener('click', functionToRun, {once: true});
+
+// To remove the event
+dummFunction = () => {
+    console.log("dummy callback function");
+};
+// Adds the event.
+element.addEventListener('click', dummFunction);
+
+// Removes the event after 2 sec. 
+setTimeout(() => {
+    element.removeEventListener('nameOfEvent', dummFunction), 
+}, 2000);
 ```
 
 If you keep the capture on for an event then it will trigger while moving down the document.
@@ -197,12 +213,18 @@ You can also keep multiple events on a single element so you can set one using c
 
 ```js
 // This code will stop all the events after the trigger of child bubble
-// ie. it will executes and stops at 4. The events 5, 6, 7 will be skipped. 
+// ie. it will executes 0, 1, 2, 3, 4 and stops at 4. The events 5, 6, 7 will be skipped. 
 child.addEventListener('click', e => {
     console.log("This is a bubble event");
     e.stopPropagation()
 })
 // Similarly you can apply stopPropagation() at any level from 0 to 7 of the above image.
+
+// To stop at 2 and skip rest 
+parent.addEventListener('click', e => {
+    console.log("This is a bubble event");
+    e.stopPropagation()
+}, {capture: true});
 ```
 
 #### Types of Events
